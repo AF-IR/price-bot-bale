@@ -1,10 +1,12 @@
-name: Price Bot - Bale
+name: Price Bot
 
 on:
+  # ۱. زمان‌بندی خودکار: هر ساعت یک بار (در دقیقه ۰)
   schedule:
-    # 11 بار در روز از 6 صبح تا 12 شب (UTC)
-    - cron: '30 2,4,5,7,8,10,11,13,14,16,17 * * *'
-    
+    # ⏰ ساعت ۰۰:۰۰، ۰۱:۰۰، ۰۲:۰۰ ... تا ۲۳:۰۰ (به وقت UTC)
+    - cron: '0 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 * * *'
+
+  # ۲. اجرای دستی (برای تست)
   workflow_dispatch:
 
 jobs:
@@ -13,16 +15,19 @@ jobs:
     timeout-minutes: 5
     
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Setup Python
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      
+
       - name: Install dependencies
-        run: pip install -r requirements.txt
-      
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
       - name: Run bot
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
