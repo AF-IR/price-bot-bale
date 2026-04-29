@@ -35,4 +35,4 @@ jobs:
           CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
           CHANNEL_LINK: ${{ secrets.CHANNEL_LINK }}
           AD_LINK: ${{ secrets.AD_LINK }}
-        run: python bot.py
+        run: python bot2.py
